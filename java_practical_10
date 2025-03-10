@@ -1,0 +1,59 @@
+class SudokuGame {
+
+    public static String gridPrinting(int size, int length) {
+        String[][] elements = createElement(size, length);
+        StringBuilder pattern = new StringBuilder();
+        
+        for (int ln = 1; ln <= 2 * size + 1; ln++) {
+            for (int c = 2 * size + 1; c > 0; c--) {
+                if (ln % 2 == 0) {
+                    if (c % 2 == 0) {
+                        pattern.append("  ");
+                    } else {
+                        pattern.append("|");
+                    }
+                } else {
+                    if (c % 2 == 0) {
+                        pattern.append("--");
+                    } else {
+                        pattern.append(" ");
+                    }
+                }
+            }
+            pattern.append("\n");
+        }
+        
+        return pattern.toString();
+    }
+
+    public static String[][] createElement(int size, int length) {
+        String[][] elements = new String[size][size];
+        int count;
+        
+        for (int i = 0; i < size; i++) {
+            count = i;
+            for (int j = 0; j < size; j++) {
+                int random = (int) (System.nanoTime() % size);
+                if ((random == i) || (random == j)) {
+                    elements[i][j] = String.format("%" + length + "s", (count % size) + 1);
+                } else {
+                    elements[i][j] = String.format("%" + length + "s", "");
+                }
+                count++;
+            }
+        }
+        
+        return elements;
+    }
+
+    public static void main(String[] args) {
+        if (args.length == 0) {
+            System.out.println("provide a grid size as a command-line argument.");
+            return;
+        }
+
+        int size = Integer.parseInt(args[0]);
+        int length = args[0].length();
+        System.out.println(gridPrinting(size, length));
+    }
+}
